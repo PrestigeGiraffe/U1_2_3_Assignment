@@ -7,7 +7,7 @@ public class U1_2_3_A1 {
         double base, height, area;
 
         // prompting the user with scanner
-        System.out.print("Triangle Area Calculator\nPlease enter  the base: ");
+        System.out.print("Triangle Area Calculator\nPlease enter the base: ");
         base = input.nextDouble();
         System.out.print("Please enter the height: ");
         height = input.nextDouble();
