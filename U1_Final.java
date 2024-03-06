@@ -26,7 +26,7 @@ public class U1_Final {
             }
 
             // determining if the sides given can form a triangle
-            if (a + b < c || b + c < a || a + c < b) {
+            if (a + b <= c || b + c <= a || a + c <= b) {
                 System.out.println(a + ", " + b + ", and " + c + " cannot form a triangle.");
                 System.out.println("******************************");
                 continue;
