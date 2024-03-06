@@ -66,7 +66,7 @@ public class U1_Final {
                     continueLoop = false;
                     break;
                 } else { // if the user does not enter either 'y' or 'n', then it will tell them what they inputted is invalid and not break out of the loop
-                    System.out.println("\'" + loopInput + "\' is an invalid input");
+                    System.out.println("'" + loopInput + "' is an invalid input");
                 }
             }
 
