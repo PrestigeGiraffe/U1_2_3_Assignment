@@ -45,7 +45,7 @@ public class U1_Final {
             perimeter = a + b + c;
 
             // calculating area
-            s = (a + b + c) / 2;
+            s = perimeter / 2;
             area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
 
             // outputting results to user
