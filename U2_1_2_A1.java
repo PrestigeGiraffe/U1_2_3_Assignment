@@ -16,7 +16,7 @@ public class U2_1_2_A1 {
         read.close();
 
         // calculations
-        volume = (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);
+        volume = (4.0 / 3.0) * Math.PI * Math.pow(radius, 3); // there are .0s added to the end of the fraction because it would do integer division instead without the .0 (and therefore truncate the number down to 1)
         surfaceArea = 4 * Math.PI * Math.pow(radius, 2);
 
         // outputting answer to user
