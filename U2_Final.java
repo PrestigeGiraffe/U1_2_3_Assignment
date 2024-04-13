@@ -25,20 +25,23 @@ public class U2_Final {
         for (int i = 0; i < numOfStudents; i++) {
             System.out.printf("\nStudent #%d Information: ", i+1);
             userInput = read.nextLine();
+        }
 
-            // splitting the information into separate values
-            for (int x = 0; x < 4; x++) {
-                for (int y = 0; y < userInput.length(); y++) {
-                    int counter = 0; // counts how many
-                    int previousCounter = 0;
-                    if (userInput.charAt(y) == ',' || userInput.charAt(y) == ' ') {
-                        students[i][x] = userInput.substring(previousCounter, counter);
-                        previousCounter = counter;
-                        counter = 0;
-                    }
-                    else {
-                        counter++;
-                    }
+        // splitting the information into separate values
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < userInput.length(); y++) {
+                int counter = 0; // counts how many
+                int previousCounter = 0; // determines where the last piece of info left off
+                char currentChar = userInput.charAt(y);
+                System.out.print(currentChar);
+                if (currentChar == ',' || currentChar == ' ') { // if the current character is a comma or a space
+                    //System.out.print("sep");
+                    students[i][x] = userInput.substring(previousCounter, counter);
+                    previousCounter = counter;
+                    counter = 0;
+                }
+                else {
+                    counter++;
                 }
             }
         }
