@@ -1,7 +1,7 @@
 /*
-    Purpose: Gives the user 5 options: generate 10 random numbers in an array, display the array, quit the program, swap the numbers in the array, and shuffle the numbers in the array.
-    Author: Johnson & Mr. Han (copied and pasted example 4 from U3-1-Methods note)
-*/
+ * Purpose: Gives the user 5 options: generate 10 random numbers in an array, display the array, quit the program, swap the numbers in the array, and shuffle the numbers in the array.
+ * Author(s): Johnson Yep & Mr. Han (copied and pasted example 4 from U3-1-Methods note)
+ */
 
 import java.util.Scanner;
 
