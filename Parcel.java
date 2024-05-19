@@ -18,6 +18,6 @@
     }
 
     public void decreasePrice(double percent) {
-        this.price -= this.price*(percent/100);
+        this.price -= this.price*(percent/100); // subtract the price times the percent inputted from the price, /100 so that the user can input a number from 1-100 rather than 0-1
     }
  }
