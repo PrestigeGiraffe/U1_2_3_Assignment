@@ -1,5 +1,5 @@
 /*
- * Purpose: To give parcels a name and price, and then decrease their price by a percentage
+ * Purpose: To give parcels a name and price and store it in another class, and then decrease their price by a percentage using a method in the other class
  * Author: Johnson yep
  */
 
@@ -7,11 +7,10 @@
     public static void main(String[] args) {
         // CREATING OBJECTS OF PARCEL, AND GIVING THEM VALUES
         Parcel p1 = new Parcel("Plant", 20);
-        Parcel p2 = new Parcel("TV", 600);
 
-        // Parcel p2 = new Parcel();
-        // p2.name = "TV";
-        // p2.price = 600;
+        Parcel p2 = new Parcel();
+        p2.name = "TV";
+        p2.price = 600;
 
         // DECREASING PRICE
         p1.decreasePrice(10);
