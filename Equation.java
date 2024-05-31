@@ -1,5 +1,5 @@
 /*
- * Purpose: Class that contains values for the slope and yIntercept of a line. Also contains a method to return a line form equation using the slope and yIntercept values and a method to create a table of x and y values based on a range that the user enters.
+ * Purpose: Class that contains values for the slope and y-intercept of a line. Also contains a method to return a line form equation using the slope and y-intercept values and a method to write a table of x and y values based on a range that the user enters into a file that the user can name.
  * Author: Johnson Yep
  */
 

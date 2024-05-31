@@ -13,13 +13,18 @@ public class U3_Final {
         // PROMPTING USER FOR THE SLOPE AND Y-INTERCEPT
         System.out.print("Enter the slope: ");
         int slope = read.nextInt();
+
         System.out.print("Enter the y-intercept: ");
         int yIntercept = read.nextInt();
         
         // CREATING OBJECT OF EQUATION CLASS
-        Equation equation = new Equation(slope, yIntercept);
-        String lineForm = equation.returnLineForm();
+        Equation equation = new Equation(slope, yIntercept); // sets its values via the constructor
+
+        // RETURNING LINE FORM EQUATION
+        String lineForm = equation.returnLineForm(); // calls the returnLineForm method from the equation class and stores it in a string variable so it can be used in the next line
         System.out.printf("The equation of the line is %s\n", lineForm);
+
+        // CREATING TABLE OF VALUES IN A FILE
         System.out.println("\nCreate a table of values...");
         System.out.print("Enter the min x value: ");
         int minX = read.nextInt();
@@ -28,8 +33,7 @@ public class U3_Final {
         System.out.print("Enter the file name: ");
         String fileName = read.next();
         
-        boolean successful = equation.createTableFile(minX, maxX, fileName);
-
+        boolean successful = equation.createTableFile(minX, maxX, fileName); // value to store whether or not the file was successfully made
         if (successful) {
             System.out.println("File was saved successfully.");
         }
@@ -38,6 +42,5 @@ public class U3_Final {
         }
 
         read.close();
-
     }
 }
