@@ -26,8 +26,17 @@ public class SpaceRace extends Application {
 
         // Intro Screen
         Label welcome = new Label("Welcome To");
+        GridPane.setConstraints(welcome, 0, 0);
         Label title = new Label("Space Race");
-        Scene intro = new Scene(null);
+        GridPane.setConstraints(title, 0, 1);
+        Button playButton = new Button("PLAY");
+        GridPane.setConstraints(playButton, 0, 2);
+
+        Scene intro = new Scene(grid, 400, 300);
+        intro.getStylesheets().add("styles.css"); // add the styles.css style sheet so it can be used by the scene
+
+        // Add objects to grid
+        grid.getChildren().addAll(welcome, title, playButton);
 
         window.setScene(intro);
         window.show();

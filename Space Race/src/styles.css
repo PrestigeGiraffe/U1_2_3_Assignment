@@ -1,3 +1,9 @@
 .root {
     -fx-background-color: black;
+    -fx-alignment: center;
+}
+
+label {
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
 }
