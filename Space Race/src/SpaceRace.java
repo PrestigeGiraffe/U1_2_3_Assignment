@@ -1,5 +1,5 @@
 /*
-    * Purpose: Space Race is a game with the main objective of surviving in a space. The player is controlling a space ship that can shoot lasers and has to defeat enemies in order to survive. Each enemy will reward points when defeated, and players are able to purchase power ups with these points.
+ * Purpose: Space Race is a game with the main objective of surviving in a space. The player is controlling a space ship that can shoot lasers and has to defeat enemies in order to survive. Each enemy will reward points when defeated, and players are able to purchase power ups with these points.
  * Author: Johnson
  */
 
@@ -46,10 +46,11 @@ public class SpaceRace extends Application {
         
         Button playButton = new Button("PLAY");
         GridPane.setConstraints(playButton, 0, 2);
-        playButton.setOnAction(e -> {
+
+        playButton.setOnAction(e -> { // once the user clicks the play button, it changes the scene to the main game and makes the window full screen
             window.setScene(mainGame);
             window.setFullScreen(true);
-        }); // set stage's scene to main game when the play button is clicked
+        });
 
         // Center everything so it looks even
         GridPane.setHalignment(welcome, HPos.CENTER);
