@@ -1,0 +1,133 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "FileManager",
+            "request": "launch",
+            "mainClass": "FileManager",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U1_2_3_A1",
+            "request": "launch",
+            "mainClass": "U1_2_3_A1",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U1_2_3_A2",
+            "request": "launch",
+            "mainClass": "U1_2_3_A2",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U1_4_6_A1",
+            "request": "launch",
+            "mainClass": "U1_4_6_A1",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U1_4_6_A2",
+            "request": "launch",
+            "mainClass": "U1_4_6_A2",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U1_4_6_A3",
+            "request": "launch",
+            "mainClass": "U1_4_6_A3",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U1_Final",
+            "request": "launch",
+            "mainClass": "U1_Final",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U2_1_2_A1",
+            "request": "launch",
+            "mainClass": "U2_1_2_A1",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U2_1_2_A2",
+            "request": "launch",
+            "mainClass": "U2_1_2_A2",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U2_3_4_A1",
+            "request": "launch",
+            "mainClass": "U2_3_4_A1",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U2_3_4_A2",
+            "request": "launch",
+            "mainClass": "U2_3_4_A2",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U2_Final",
+            "request": "launch",
+            "mainClass": "U2_Final",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U3_1_2_A1",
+            "request": "launch",
+            "mainClass": "U3_1_2_A1",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U3_1_2_A2",
+            "request": "launch",
+            "mainClass": "U3_1_2_A2",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U3_3_4_A1",
+            "request": "launch",
+            "mainClass": "U3_3_4_A1",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U3_3_4_A2",
+            "request": "launch",
+            "mainClass": "U3_3_4_A2",
+            "projectName": "Assignments_c3db6ee0"
+        },
+        {
+            "type": "java",
+            "name": "U3_Final",
+            "request": "launch",
+            "mainClass": "U3_Final",
+            "projectName": "Assignments_c3db6ee0"
+        }
+    ]
+}
