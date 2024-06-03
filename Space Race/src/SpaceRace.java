@@ -32,7 +32,6 @@ public class SpaceRace extends Application {
         // MAIN GAME SCENE
         GridPane layout = new GridPane();
         mainGame = new Scene(layout, 1440, 720);
-        mainGame.set
 
         // Layout
         GridPane grid = new GridPane();
