@@ -30,22 +30,26 @@ public class Spaceship extends Entity {
     // HANDLE USER INPUTS
 
     public void moveUp() {
-        ssImage.setLayoutY(ssImage.getLayoutY()-10);
+        ssImage.setLayoutY(ssImage.getLayoutY() - 10);
     }
+
     public void moveDown() {
-        ssImage.setLayoutY(ssImage.getLayoutY()+10);
+        ssImage.setLayoutY(ssImage.getLayoutY() + 10);
     }
+
     public void moveRight() {
-        ssImage.setLayoutX(ssImage.getLayoutX()+10);
+        ssImage.setLayoutX(ssImage.getLayoutX() + 10);
     }
+
     public void moveLeft() {
-        ssImage.setLayoutX(ssImage.getLayoutX()-10);
+        ssImage.setLayoutX(ssImage.getLayoutX() - 10);
     }
 
     public void shoot(double endX, double endY, int size, int speed, Pane root) {
-        double startX = ssImage.getLayoutX() + (ssImage.getScaleX()/2); // gets center X
-        double startY = ssImage.getLayoutY() + (ssImage.getScaleY()/2); // gets center Y
-        Projectile projectile = new Projectile(startX + ssImage.getLayoutBounds().getWidth()/2, startY, endX, endY, size, speed);
+        double startX = ssImage.getLayoutX() + (ssImage.getScaleX() / 2); // gets center X
+        double startY = ssImage.getLayoutY() + (ssImage.getScaleY() / 2); // gets center Y
+        Projectile projectile = new Projectile(startX + ssImage.getLayoutBounds().getWidth() / 2, startY, endX, endY,
+                size, speed);
         projectile.move();
         root.getChildren().add(projectile);
         projectiles.add(projectile);

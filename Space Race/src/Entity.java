@@ -18,7 +18,7 @@ public class Entity extends Image {
     // private variables to prevent inadvertent direct changes to variables
     private double health, maxHealth, damage;
 
-    // GETTERS AND SETTERS TO GET AND SET VALUES OF PRIVATE VARIABLES 
+    // GETTERS AND SETTERS TO GET AND SET VALUES OF PRIVATE VARIABLES
     public double getHealth() {
         return health;
     }

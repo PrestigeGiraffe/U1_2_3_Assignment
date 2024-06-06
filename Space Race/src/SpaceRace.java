@@ -34,8 +34,6 @@ public class SpaceRace extends Application {
 
         Scene introScene;
 
-       
-
         // INTRO SCENE
         Pane introRoot = new Pane();
 
@@ -68,22 +66,30 @@ public class SpaceRace extends Application {
         GridPane.setHalignment(shootingInstructions, HPos.CENTER);
 
         introScene = new Scene(introRoot, 400, 800);
-        introScene.getStylesheets().add("introStyles.css"); // add the styles.css style sheet so it can be used by the scene
+        introScene.getStylesheets().add("introStyles.css"); // add the styles.css style sheet so it can be used by the
+                                                            // scene
 
         // Generate stars for background
         Group stars = bgGen.drawStars(1, 100, (int) introScene.getWidth(), (int) introScene.getHeight());
 
         // Add objects to grid
-        introMenuGrid.getChildren().addAll(welcome, title, playButton, movementInstructions, shootingInstructions); // adds all text and buttons to grid
+        introMenuGrid.getChildren().addAll(welcome, title, playButton, movementInstructions, shootingInstructions); // adds
+                                                                                                                    // all
+                                                                                                                    // text
+                                                                                                                    // and
+                                                                                                                    // buttons
+                                                                                                                    // to
+                                                                                                                    // grid
 
         introRoot.getChildren().add(stars); // adds grid and stars to group, so that the stars don't become apart of the
-                               // grid and mis align everything else
+        // grid and mis align everything else
         introRoot.getChildren().add(introMenuGrid);
 
         stage.setScene(introScene);
         stage.show();
 
-        // The position of the introMenuGrid can only be calculated after the stage has been shown due to how JavaFX is implemented
+        // The position of the introMenuGrid can only be calculated after the stage has
+        // been shown due to how JavaFX is implemented
         introMenuGrid.setLayoutX((int) ((introRoot.getWidth() / 2) - (introMenuGrid.getWidth() / 2)));
         introMenuGrid.setLayoutY((int) ((introRoot.getHeight() / 2) - (introMenuGrid.getHeight() / 2)));
 
@@ -92,7 +98,7 @@ public class SpaceRace extends Application {
             Scene mainGameScene = initiateGame();
             stage.setScene(mainGameScene);
             stage.setFullScreen(true); // makes the stage full screen for game play
-            
+
         });
     }
 
@@ -100,12 +106,13 @@ public class SpaceRace extends Application {
         // MAIN GAME SCENE
         Pane mainGameRoot = new Pane();
         Scene mainGameScene = new Scene(mainGameRoot, 1920, 1080);
-        mainGameScene.getStylesheets().add("mainGameStyles.css"); // add styles.css so all the UI designs/colors apply to this scene as well
+        mainGameScene.getStylesheets().add("mainGameStyles.css"); // add styles.css so all the UI designs/colors apply
+                                                                  // to this scene as well
         Group stars = bgGen.drawStars(1, 500, (int) mainGameScene.getWidth(), (int) mainGameScene.getHeight());
 
         int size = 100;
         Spaceship spaceship = new Spaceship(size);
-        ImageView ss = spaceship.spawnSpaceShip(50, (int)(mainGameScene.getHeight()/2 - size/2));
+        ImageView ss = spaceship.spawnSpaceShip(50, (int) (mainGameScene.getHeight() / 2 - size / 2));
         mainGameRoot.getChildren().addAll(ss, stars);
 
         // DETECT INPUTS FROM THIS SCENE
@@ -128,20 +135,17 @@ public class SpaceRace extends Application {
             }
         });
 
-        
-
         mainGameScene.setOnMouseClicked(e -> {
             spaceship.shoot(e.getX(), e.getY(), 5, 3, mainGameRoot);
         });
 
-        
         AnimationTimer timer = new AnimationTimer() { // too lazy to put in a separate class so I implemented it inline
 
             @Override
             public void handle(long arg0) {
                 spaceship.updateProjectiles(); // essentially loops to update the position of projectiles
             }
-            
+
         };
 
         timer.start();
