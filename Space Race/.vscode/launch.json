@@ -4,21 +4,26 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
-
         {
             "type": "java",
-            "name": "SpaceRace",
+            "name": "Bounce",
+            "request": "launch",
+            "mainClass": "Bounce",
+            "vmArgs": "--module-path C:\\Users\\Johnson\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
+            "projectName": "Space Race_d911e639"
+        },
+        {
+            "type": "java",
+            "name": "test",
             "request": "launch",
             "vmArgs": "--module-path C:\\Users\\Johnson\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
-            "mainClass": "SpaceRace",
-            "projectName": "Space Race_cd1fa47a"
+            "mainClass": "test",
+            "projectName": "Space Race_d911e639"
         },
         {
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "vmArgs": "--module-path C:\\Users\\Johnson\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
             "mainClass": "${file}"
         },
         {
