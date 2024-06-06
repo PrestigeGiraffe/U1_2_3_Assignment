@@ -13,6 +13,6 @@
 .button {
     -fx-background-color: lime;
     -fx-text-fill: white;
-    -fx-font-size: 20;
+    -fx-font-size: 20pt;
     -fx-font-weight: bold;
 }
