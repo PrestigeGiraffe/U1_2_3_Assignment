@@ -9,7 +9,7 @@
             "name": "SpaceRace",
             "request": "launch",
             "mainClass": "SpaceRace",
-            "projectName": "Space Race_fa2c6c77",
+            "projectName": "",
             "vmArgs": "--module-path \"${workspaceFolder}/lib/javafx\" --add-modules javafx.controls"
         }
     ]
