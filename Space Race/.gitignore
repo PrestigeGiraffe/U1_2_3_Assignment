@@ -41,3 +41,6 @@ replay_pid*
 
 # JavaFX
 javafx.properties
+
+# Diectories
+bin/
