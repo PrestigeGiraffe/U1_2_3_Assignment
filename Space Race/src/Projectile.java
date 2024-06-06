@@ -20,8 +20,8 @@ public class Projectile extends Rectangle {
     }
 
     public void move() {
-        double xDist = startPoint.getX() - this.getX();
-        double yDist = startPoint.getY() - this.getY();
+        double xDist = endPoint.getX() - this.getX();
+        double yDist = endPoint.getY() - this.getY();
 
         if (xDist > 0 && yDist > 0) {
             this.setX(this.getX() + speed);
