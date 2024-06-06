@@ -3,10 +3,6 @@
  * Author: Johnson
  */
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.HPos;
@@ -16,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 
