@@ -6,7 +6,7 @@
     "configurations": [
         {
             "type": "java",
-            "name": "SpaceRace",
+            "name": "Run SpaceRace",
             "request": "launch",
             "mainClass": "SpaceRace",
             "projectName": "",
