@@ -3,6 +3,7 @@
  * Author: Johnson Yep
  */
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Spaceship extends Entity {
     List<Projectile> projectiles = new ArrayList<>(); // List of projectiles to keep track of them
 
     Spaceship(int size) {
-        super("res\\Spaceship.png", size, size); // calls parent class' (Entity) constructor
+        super(Paths.get("res", "Spaceship.png").toString(), size, size); // calls parent class' (Entity) constructor
     }
 
     ImageView ssImage;
