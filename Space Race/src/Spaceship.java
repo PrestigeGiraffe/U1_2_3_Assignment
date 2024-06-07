@@ -6,6 +6,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
@@ -56,9 +57,16 @@ public class Spaceship extends Entity {
     }
 
     // Loops through all the projectiles on the screen and updates their position
-    public void updateProjectiles() {
-        for (Projectile projectile : projectiles) {
+    public void updateProjectiles(Scene scene, Pane root) {
+        for (int i = 0; i < projectiles.size(); i++) { // used a regular for loop instead of an enhanced for loop because it caused ConcurrentModificationExceptions when projectiles were being removed
+            Projectile projectile = projectiles.get(i);
             projectile.move();
+
+            // Deletes the projectile from the layout and the list once it goes off the screen
+            if (projectile.getX() > scene.getWidth() || projectile.getY() > scene.getHeight() || projectile.getX() < 0 || projectile.getY() < 0) {
+                root.getChildren().remove(projectile);
+                projectiles.remove(projectile);
+            }
         }
     }
 }

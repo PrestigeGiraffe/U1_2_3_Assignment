@@ -138,7 +138,7 @@ public class SpaceRace extends Application {
 
             @Override
             public void handle(long arg0) {
-                spaceship.updateProjectiles(); // essentially loops to update the position of projectiles
+                spaceship.updateProjectiles(mainGameScene, mainGameRoot); // essentially loops to update the position of projectiles
             }
 
         };
