@@ -5,6 +5,7 @@
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -95,6 +96,14 @@ public class SpaceRace extends Application {
             stage.setFullScreen(true); // makes the stage full screen for game play
 
         });
+
+        ChangeListener<Number> onStageResized = (observableValue, oldValue, newValue) -> {
+            // Handle redrawing the scene to fit in the new dimensions here
+            introRoot.getChildren().add(bgGen.drawStars(1, 100, (int) introScene.getWidth(), (int) introScene.getHeight()));
+        };
+
+        stage.widthProperty().addListener(onStageResized);
+        stage.heightProperty().addListener(onStageResized);
     }
 
     public Scene initiateGame() {
@@ -147,5 +156,4 @@ public class SpaceRace extends Application {
 
         return mainGameScene;
     }
-
 }
