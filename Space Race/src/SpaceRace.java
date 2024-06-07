@@ -107,7 +107,7 @@ public class SpaceRace extends Application {
 
         int size = 100;
         Spaceship spaceship = new Spaceship(size);
-        ImageView ss = spaceship.spawnSpaceShip(50, (int) (mainGameScene.getHeight() / 2 - size / 2));
+        ImageView ss = spaceship.spawnSpaceShip(50, (int) (mainGameScene.getHeight() / 2 - size / 2)); // makes the spaceship spawn in the center vertically, and 50 pixels out from 0 horizontally
         mainGameRoot.getChildren().addAll(ss, stars);
 
         // DETECT INPUTS FROM THIS SCENE
@@ -130,7 +130,7 @@ public class SpaceRace extends Application {
             }
         });
 
-        mainGameScene.setOnMouseClicked(e -> {
+        mainGameScene.setOnMouseClicked(e -> { // When the scene detects a mouse click, call the shoot method from the spaceship class
             spaceship.shoot(e.getX(), e.getY(), 5, 3, mainGameRoot);
         });
 
