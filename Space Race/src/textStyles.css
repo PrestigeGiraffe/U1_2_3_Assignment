@@ -1,0 +1,17 @@
+.root {
+    -fx-background-color: black;
+    -fx-alignment: center;
+}
+
+.label {
+    text-align: center;
+    -fx-text-fill: white;
+    -fx-font-size: 20pt;
+    -fx-font-family: Georgia, serif;
+}
+
+.button {
+    -fx-text-fill: white;
+    -fx-font-size: 20pt;
+    -fx-font-weight: bold;
+}
