@@ -178,7 +178,7 @@ public class SpaceRace extends Application {
                 health.setHealth(spaceship.getHealth());
 
                 // subtracts the elapsed time between when the timer first starts and now, if it is 3 seconds (3000ms) then reset the startTime and spawn an asteroid
-                if (System.currentTimeMillis() - asteroidStartTime >= 3000) { // '>=' rather than '=' in case it goes so fast that it skips it
+                if (System.currentTimeMillis() - asteroidStartTime >= 3000) {
                 asteroidStartTime = System.currentTimeMillis();
                     Asteroid asteroid = new Asteroid(300, mainGameScene);
                     asteroids.add(asteroid); // add the new object to the list

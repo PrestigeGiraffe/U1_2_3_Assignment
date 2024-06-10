@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Score {
-    private int score, timeSurvived, damageDone;
+    // private int timesPlayed;
+    // private int[][] scores = new int[3][timesPlayed]; // creates a 2D array that stores the values of the game scores at the game over screen
     
+    private int score, timeSurvived, damageDone;
 
     public void updateScore(boolean progressed, int stat) {
         try {
@@ -33,34 +35,33 @@ public class Score {
             File file = new File("HighScores.txt");
             Scanner read = new Scanner(file);
 
-            if 
+            int i = 0; // variable to keep track of how many iterations the while loop as gone through
+            while (read.hasNextInt()) {
+                if (i == 0 && this.score < read.nextInt()) {
+                    this.score = read.nextInt();
+                    break;
+                }
+                else if (i == 1 && this.timeSurvived < read.nextInt()) {
+                    this.timeSurvived = read.nextInt();
+                    break;
+                }
+                else if (i == 2 && this.damageDone < read.nextInt()) {
+                    this.damageDone = read.nextInt();
+                    break;
+                }
+                else {
+                    read.close();
+                    return false;
+                }
+            }
+
+            read.close();
+            return true;
         }
         catch(FileNotFoundException e) {
             System.out.println("File not found.");
         }
-        
-    }
 
-    // GETTERS AND SETTERS FOR CLASS FIELDS
-    public int getScore() {
-        return score;
-    }
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public int getTimeSurvived() {
-        return timeSurvived;
-    }
-    public void setTimeSurvived(int timeSurvived) {
-        this.timeSurvived = timeSurvived;
-    }
-
-    public int getDamageDone() {
-        return damageDone;
-    }
-
-    public void setDamageDone(int damageDone) {
-        this.damageDone = damageDone;
+        return false;
     }
 }
