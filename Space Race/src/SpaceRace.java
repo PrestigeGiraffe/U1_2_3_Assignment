@@ -3,8 +3,11 @@
  * Author: Johnson Yep
  */
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -22,6 +25,7 @@ import javafx.scene.Node;
 
 public class SpaceRace extends Application {
     Stage stage;
+    Stats stats = new Stats();
     public static void main(String[] args) {
         launch(args);
     }
@@ -162,7 +166,7 @@ public class SpaceRace extends Application {
             spaceship.shoot(e.getX(), e.getY(), 5, 3, mainGameRoot);
         });
 
-        Score scores = new Score();
+        Stats scores = new Stats();
 
         List<Asteroid> asteroids = new ArrayList<>(); // List to store asteroids so we can loop through it to move existing asteroids (same logic as projectiles)
         AnimationTimer timer = new AnimationTimer() { // too lazy to put in a separate class so I implemented it inline
@@ -227,6 +231,9 @@ public class SpaceRace extends Application {
             gameOverGrid.getChildren().add(element);
         }
 
+        // Write this game's scores to a file
+        stats.saveStats();
+
         Scene gameOverScene = new Scene(gameOverGrid, 400, 800);
         gameOverScene.getStylesheets().add("textStyles.css"); // add the styles.css style sheet so it can be used by the scene
         stage.setScene(gameOverScene);
@@ -248,4 +255,24 @@ public class SpaceRace extends Application {
         }
     }
 
+    public Stats returnHighest() {
+        try {
+            File file = new File("HighScores.txt");
+            Scanner read = new Scanner(file);
+
+            ArrayList<Stats> stats = new ArrayList<>();
+            
+            while (read.hasNextLine()) {
+                String currentStatsRaw = read.nextLine();
+                String[] currentStats = currentStatsRaw.split(" "); // Method that splits a string into different substrings between a specific string/character, website I learned it from: https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#split-java.lang.String-
+                stats.add(new Stats(currentStats[0], currentStats[1], currentStats[2])); // creates a new object of Stats class, and adds it to the stats ArrayList created above
+            }
+            
+
+            read.close();
+        }
+        catch(FileNotFoundException e) {
+            System.out.println("File not found.");
+        }
+    }
 }
