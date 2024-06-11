@@ -1,0 +1,11 @@
+.root {
+    -fx-background-color: black;
+    -fx-alignment: center;
+}
+
+.label {
+    text-align: center;
+    -fx-text-fill: white;
+    -fx-font-size: 12pt;
+    -fx-font-family: Georgia, serif;
+}
