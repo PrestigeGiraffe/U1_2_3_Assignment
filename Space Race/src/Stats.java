@@ -9,6 +9,8 @@ import java.io.IOException;
 public class Stats {
     private int kills, timeSurvived, damageDone;
 
+    public Stats() {}
+
     public Stats(int kills, int timeSurvived, int damageDone) {
         this.kills = kills;
         this.timeSurvived = timeSurvived;
@@ -31,7 +33,7 @@ public class Stats {
     // Method that writes the current game's scores down into a file
     public void saveStats() {
         try {
-            FileWriter file = new FileWriter("HighScores.txt");
+            FileWriter file = new FileWriter("HighScores.txt", true); // True to append text to file instead of overriding
             
             file.write(String.format("%d %d %d", kills, timeSurvived, damageDone));
             file.write(System.lineSeparator());
