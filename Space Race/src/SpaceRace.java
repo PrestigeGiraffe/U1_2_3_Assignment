@@ -166,7 +166,6 @@ public class SpaceRace extends Application {
             spaceship.shoot(e.getX(), e.getY(), 5, 3, mainGameRoot);
         });
 
-        Stats scores = new Stats();
 
         List<Asteroid> asteroids = new ArrayList<>(); // List to store asteroids so we can loop through it to move existing asteroids (same logic as projectiles)
         AnimationTimer timer = new AnimationTimer() { // too lazy to put in a separate class so I implemented it inline
@@ -190,7 +189,8 @@ public class SpaceRace extends Application {
                 }
 
                 if (System.currentTimeMillis() - timeSurvivedStartTime >= 1000) { // every second increase the time survived
-                    scores.setTimeSurvived(scores.getTimeSurvived() + 1);
+                    timeSurvivedStartTime = System.currentTimeMillis();
+                    stats.setTimeSurvived(stats.getTimeSurvived() + 1);
                 }
 
                 // Health manager
@@ -220,22 +220,40 @@ public class SpaceRace extends Application {
         GridPane.setConstraints(gameOver, 0, 0);
         gridElements.add(gameOver);
 
+
         Label highScores = new Label("High Scores: ");
         highScores.setStyle("-fx-font-size: 12pt");
         GridPane.setConstraints(highScores, 0, 1);
         gridElements.add(highScores);
 
+
+        // Write this game's scores to a file
+        stats.saveStats();
+
+        Stats highestStats = returnHighest();
+        Label kills = new Label("Kills: " + highestStats.getKills());
+        Label timeSurvived = new Label("Time Survived: " + highestStats.getTimeSurvived() + " seconds");
+        Label damageDone = new Label("Damage Done: " + highestStats.getDamageDone());
+        GridPane.setConstraints(kills, 0, 2);
+        GridPane.setConstraints(timeSurvived, 0, 3);
+        GridPane.setConstraints(damageDone, 0, 4);
+        gridElements.add(kills);
+        gridElements.add(timeSurvived);
+        gridElements.add(damageDone);
+
+        
         // Loop to center everything and add them to the grid layout
         for(Node element : gridElements) {
             GridPane.setHalignment(element, HPos.CENTER);
             gameOverGrid.getChildren().add(element);
         }
 
-        // Write this game's scores to a file
-        stats.saveStats();
+        
+
+
 
         Scene gameOverScene = new Scene(gameOverGrid, 400, 800);
-        gameOverScene.getStylesheets().add("textStyles.css"); // add the styles.css style sheet so it can be used by the scene
+        gameOverScene.getStylesheets().add("gameOverStyles.css"); // add the styles.css style sheet so it can be used by the scene
         stage.setScene(gameOverScene);
     }
 
@@ -260,19 +278,43 @@ public class SpaceRace extends Application {
             File file = new File("HighScores.txt");
             Scanner read = new Scanner(file);
 
-            ArrayList<Stats> stats = new ArrayList<>();
+            ArrayList<Stats> statsList = new ArrayList<>();
             
             while (read.hasNextLine()) {
                 String currentStatsRaw = read.nextLine();
                 String[] currentStats = currentStatsRaw.split(" "); // Method that splits a string into different substrings between a specific string/character, website I learned it from: https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#split-java.lang.String-
-                stats.add(new Stats(currentStats[0], currentStats[1], currentStats[2])); // creates a new object of Stats class, and adds it to the stats ArrayList created above
+                statsList.add(new Stats(currentStats[0], currentStats[1], currentStats[2])); // creates a new object of Stats class, and adds it to the stats ArrayList created above
             }
             
+            
+            Stats highestStats = new Stats(0, 0, 0);
+            // if there has only been one game played then just print the first stats
+            if (statsList.size() == 1) {
+                highestStats.setKills(statsList.get(0).getKills());
+                highestStats.setTimeSurvived(statsList.get(0).getTimeSurvived());
+                highestStats.setDamageDone(statsList.get(0).getDamageDone());
+            }
+            else {
+                // Loop to bubble sort all the stats in the file, and then create a new Stats class to store the highest values and return it back to where this method is called
+                for (int gameNum = 0; gameNum < statsList.size(); gameNum++) {
+                    if (highestStats.getKills() < statsList.get(gameNum).getKills()) { // 
+                        highestStats.setKills(statsList.get(gameNum).getKills());
+                    }
+                    if (highestStats.getTimeSurvived() < statsList.get(gameNum).getTimeSurvived()) { // 
+                        highestStats.setTimeSurvived(statsList.get(gameNum).getTimeSurvived());
+                    }
+                    if (highestStats.getDamageDone() < statsList.get(gameNum).getDamageDone()) { // 
+                        highestStats.setDamageDone(statsList.get(gameNum).getDamageDone());
+                    }
+                }
+            }
 
             read.close();
+            return highestStats;
         }
         catch(FileNotFoundException e) {
             System.out.println("File not found.");
         }
+        return null;
     }
 }
