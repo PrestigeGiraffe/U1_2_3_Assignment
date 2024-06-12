@@ -9,7 +9,7 @@
             "type": "java",
             "name": "SpaceRace",
             "request": "launch",
-            "vmArgs": "--module-path C:\\Users\\johns\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
+            "vmArgs": "--module-path C:\\Users\\Johnson\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
             "mainClass": "SpaceRace",
             "projectName": "Space Race_cd1fa47a"
         },
@@ -18,14 +18,14 @@
             "name": "Bounce",
             "request": "launch",
             "mainClass": "Bounce",
-            "vmArgs": "--module-path C:\\Users\\johns\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
+            "vmArgs": "--module-path C:\\Users\\Johnson\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
             "projectName": "Space Race_d911e639"
         },
         {
             "type": "java",
             "name": "test",
             "request": "launch",
-            "vmArgs": "--module-path C:\\Users\\johns\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
+            "vmArgs": "--module-path C:\\Users\\Johnson\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
             "mainClass": "test",
             "projectName": "Space Race_d911e639"
         },
@@ -39,7 +39,7 @@
             "type": "java",
             "name": "SpaceRace",
             "request": "launch",
-            "vmArgs": "--module-path C:\\Users\\johns\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
+            "vmArgs": "--module-path C:\\Users\\Johnson\\Downloads\\openjfx-22.0.1_windows-x64_bin-sdk\\javafx-sdk-22.0.1\\lib --add-modules javafx.controls",
             "mainClass": "SpaceRace",
             "projectName": "Space Race_d911e639"
         }
