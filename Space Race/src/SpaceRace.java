@@ -24,6 +24,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 
 public class SpaceRace extends Application {
+    BackgroundGenerator bgGen = new BackgroundGenerator();
     Stage stage;
     Stats stats = new Stats();
     public static void main(String[] args) {
@@ -133,14 +134,14 @@ public class SpaceRace extends Application {
         // object of spaceship
         int spaceshipSize = 100;
         Spaceship spaceship = new Spaceship(spaceshipSize);
-        ImageView ss = spaceship.spawnSpaceShip(50, (int) (mainGameScene.getHeight() / 2 - spaceshipSize / 2)); // makes the spaceship spawn in the center vertically, and 50 pixels out from 0 horizontally
+        ImageView spaceshipImageView = spaceship.spawnSpaceShip(50, (int) (mainGameScene.getHeight() / 2 - spaceshipSize / 2)); // makes the spaceship spawn in the center vertically, and 50 pixels out from 0 horizontally
         
         // health bar
         HealthBar health = new HealthBar(25, 25, 350, 30);
         Rectangle insideHealthBar = health.getInsideHealthBar();
         Label healthText = health.getHealthText(spaceship.getHealth());
 
-        mainGameRoot.getChildren().addAll(ss, stars, health, insideHealthBar, healthText);
+        mainGameRoot.getChildren().addAll(spaceshipImageView, stars, health, insideHealthBar, healthText);
 
         // DETECT INPUTS FROM THIS SCENE
         mainGameScene.setOnKeyPressed(e -> {
@@ -167,23 +168,30 @@ public class SpaceRace extends Application {
         });
 
 
-        List<Asteroid> asteroids = new ArrayList<>(); // List to store asteroids so we can loop through it to move existing asteroids (same logic as projectiles)
+        List<Asteroid> asteroids = new ArrayList<>(); // List to store asteroids so w4e can loop through it to move existing asteroids (same logic as projectiles)
+        List<Alien> aliens = new ArrayList<>(); // List to store aliens so we can loop through to have each of them shoot
+        List<Projectile> alienProjectiles = new ArrayList<>(); // List of alien projectiles to keep track of them and update them
+        Projectile projectile = new Projectile();
+
         AnimationTimer timer = new AnimationTimer() { // too lazy to put in a separate class so I implemented it inline
-            long asteroidStartTime = System.currentTimeMillis(); // variable to determine time elapsed
+            long asteroidSpawnTime = System.currentTimeMillis(); // variable to determine time elapsed
             long timeSurvivedStartTime = System.currentTimeMillis();
+            long alienSpawnTime = System.currentTimeMillis();
+            long alienShootTime = System.currentTimeMillis();
 
             @Override
             public void handle(long arg0) {
                 spaceship.updateProjectiles(mainGameScene, mainGameRoot); // essentially loops to update the position of projectiles
+                projectile.updateProjectiles(mainGameScene, mainGameRoot, alienProjectiles);
                 updateAsteroids(mainGameScene, mainGameRoot, asteroids, 5); // same logic as projectiles
                 spaceship.checkCollisions(asteroids); // loops to check if the spaceship has touched anything that deals damage to it
 
                 health.setHealth(spaceship.getHealth());
 
-                // subtracts the elapsed time between when the timer first starts and now, if it is 3 seconds (3000ms) then reset the startTime and spawn an asteroid
-                if (System.currentTimeMillis() - asteroidStartTime >= 3000) {
-                asteroidStartTime = System.currentTimeMillis();
-                    Asteroid asteroid = new Asteroid(300, mainGameScene);
+                // subtracts the elapsed time between when the timer first starts and now, if it is a time between 1-4 seconds (1000-4000ms) then reset the startTime and spawn an asteroid
+                if (System.currentTimeMillis() - asteroidSpawnTime >= 1000 + (Math.random()*2000)) {
+                asteroidSpawnTime = System.currentTimeMillis();
+                    Asteroid asteroid = new Asteroid(200 + (int)(Math.random()*200), mainGameScene); // Spawns asteroid at a random size between 200-400 pixels
                     asteroids.add(asteroid); // add the new object to the list
                     mainGameRoot.getChildren().add(asteroid.getAsteroidImageView());
                 }
@@ -192,6 +200,26 @@ public class SpaceRace extends Application {
                     timeSurvivedStartTime = System.currentTimeMillis();
                     stats.setTimeSurvived(stats.getTimeSurvived() + 1);
                 }
+
+                if (System.currentTimeMillis() - alienSpawnTime >= 10000) { // every 10 seconds, spawn a new alien
+                    alienSpawnTime = System.currentTimeMillis();
+                    int alienSize = 200;
+                    Alien alien = new Alien(alienSize);
+                    aliens.add(alien); // add alien object to list
+
+                    // Spawns alien anywhere on the right half of the screen
+                    ImageView alienImageView = alien.spawnAlien((int)((mainGameScene.getWidth() / 2) + (Math.random()*(mainGameScene.getWidth() / 2))), (int)(Math.random()*(mainGameScene.getHeight() - alienSize)));
+                    mainGameRoot.getChildren().add(alienImageView);
+                }
+
+                if (System.currentTimeMillis() - alienShootTime >= 2000) { // every two seconds, make aliens shoot
+                    for (Alien alien : aliens) {
+                        alienShootTime = System.currentTimeMillis();
+                        alien.shoot(spaceshipImageView, 5, 3, mainGameRoot, alienProjectiles);
+                    }
+                }
+
+                
 
                 // Health manager
                 if (spaceship.getHealth() <= 0) {
