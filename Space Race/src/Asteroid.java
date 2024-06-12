@@ -5,6 +5,8 @@
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 
+// Credit for image: https://stock.adobe.com/search?k=meteor+cartoon
+
 public class Asteroid extends Entity {
     private ImageView asteroidImageView;
     private boolean canHit = true; // field that disables the asteroid from doing damage after it has already hit the player
