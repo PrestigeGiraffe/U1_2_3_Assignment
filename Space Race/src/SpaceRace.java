@@ -224,8 +224,6 @@ public class SpaceRace extends Application {
                     }
                 }
 
-                
-
                 // Health manager
                 if (spaceship.getHealth() <= 0) {
                     this.stop();
@@ -280,10 +278,6 @@ public class SpaceRace extends Application {
             GridPane.setHalignment(element, HPos.CENTER);
             gameOverGrid.getChildren().add(element);
         }
-
-        
-
-
 
         Scene gameOverScene = new Scene(gameOverGrid, 400, 800);
         gameOverScene.getStylesheets().add("gameOverStyles.css"); // add the styles.css style sheet so it can be used by the scene
