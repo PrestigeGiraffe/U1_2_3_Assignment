@@ -6,7 +6,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import javafx.animation.AnimationTimer;
@@ -16,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -27,11 +30,11 @@ public class SpaceRace extends Application {
     BackgroundGenerator bgGen = new BackgroundGenerator();
     Stage stage;
     Stats stats = new Stats();
+    Map<KeyCode, Boolean> keyStates = new HashMap<>();
+
     public static void main(String[] args) {
         launch(args);
     }
-
-    BackgroundGenerator bgGen = new BackgroundGenerator();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -145,22 +148,11 @@ public class SpaceRace extends Application {
 
         // DETECT INPUTS FROM THIS SCENE
         mainGameScene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case W:
-                    spaceship.moveUp();
-                    break;
-                case S:
-                    spaceship.moveDown();
-                    break;
-                case D:
-                    spaceship.moveRight();
-                    break;
-                case A:
-                    spaceship.moveLeft();
-                    break;
-                default:
-                    break;
-            }
+            keyStates.put(e.getCode(), true);
+        });
+
+        mainGameScene.setOnKeyReleased(e -> {
+            keyStates.put(e.getCode(), false);
         });
 
         mainGameScene.setOnMouseClicked(e -> { // When the scene detects a mouse click, call the shoot method from the spaceship class
@@ -181,6 +173,19 @@ public class SpaceRace extends Application {
 
             @Override
             public void handle(long arg0) {
+                if (keyStates.getOrDefault(KeyCode.W, false)) {
+                    spaceship.moveUp();
+                }
+                if (keyStates.getOrDefault(KeyCode.S, false)) {
+                    spaceship.moveDown();
+                }
+                if (keyStates.getOrDefault(KeyCode.D, false)) {
+                    spaceship.moveRight();
+                }
+                if (keyStates.getOrDefault(KeyCode.A, false)) {
+                    spaceship.moveLeft();
+                }
+
                 spaceship.updateProjectiles(mainGameScene, mainGameRoot); // essentially loops to update the position of projectiles
                 projectile.updateProjectiles(mainGameScene, mainGameRoot, alienProjectiles);
                 updateAsteroids(mainGameScene, mainGameRoot, asteroids, 5); // same logic as projectiles
