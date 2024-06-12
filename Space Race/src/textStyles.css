@@ -6,7 +6,7 @@
 .label {
     text-align: center;
     -fx-text-fill: white;
-    -fx-font-size: 20pt;
+    -fx-font-size: 12pt;
     -fx-font-family: Georgia, serif;
 }
 
@@ -14,4 +14,5 @@
     -fx-text-fill: white;
     -fx-font-size: 20pt;
     -fx-font-weight: bold;
+    -fx-background-color: lime;
 }

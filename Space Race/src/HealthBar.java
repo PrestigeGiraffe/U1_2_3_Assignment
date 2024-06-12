@@ -24,7 +24,7 @@ public class HealthBar extends Rectangle {
         healthText = new Label();
         healthText.setLayoutX(x);
         healthText.setLayoutY(y);
-        healthText.setStyle("-fx-text-fill: OLIVEDRAB");
+        healthText.setStyle("-fx-text-fill: OLIVEDRAB;" + "-fx-font-size: 20pt;");
     }
 
     public Rectangle getInsideHealthBar() {
