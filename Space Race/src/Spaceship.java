@@ -9,6 +9,9 @@ import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
+
+// Credit for image: https://www.vecteezy.com/vector-art/6101910-spaceship-cartoon-icon
 
 public class Spaceship extends Entity {
     List<Projectile> projectiles = new ArrayList<>(); // List of projectiles to keep track of them
