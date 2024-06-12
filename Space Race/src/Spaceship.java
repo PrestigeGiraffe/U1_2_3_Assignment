@@ -14,6 +14,7 @@ import javafx.scene.paint.Paint;
 // Credit for image: https://www.vecteezy.com/vector-art/6101910-spaceship-cartoon-icon
 
 public class Spaceship extends Entity {
+    private int speed = 2;
     List<Projectile> projectiles = new ArrayList<>(); // List of projectiles to keep track of them
     ImageView spaceshipImageView;
 
@@ -25,21 +26,20 @@ public class Spaceship extends Entity {
         this.setDamage(10);
     }
 
-    public void checkCollisions(List<Asteroid> asteroids) {
+    public void checkCollisions(List<Asteroid> asteroids, List<Projectile> alienProjectiles) {
         double spaceshipWidth = spaceshipImageView.getLayoutBounds().getWidth();
         double spaceshipHeight = spaceshipImageView.getLayoutBounds().getHeight();
         double spaceshipX = spaceshipImageView.getLayoutX();
         double spaceshipY = spaceshipImageView.getLayoutY();
 
         for (Asteroid asteroid : asteroids) {
-            double asteroidX = asteroid.getAsteroidImageView().getLayoutX();
-            double asteroidY = asteroid.getAsteroidImageView().getLayoutY();
-            double asteroidWidth = asteroid.getAsteroidImageView().getLayoutBounds().getWidth();
-            double asteroidHeight = asteroid.getAsteroidImageView().getLayoutBounds().getHeight();
+            double X = asteroid.getAsteroidImageView().getLayoutX();
+            double Y = asteroid.getAsteroidImageView().getLayoutY();
+            double Width = asteroid.getAsteroidImageView().getLayoutBounds().getWidth();
+            double Height = asteroid.getAsteroidImageView().getLayoutBounds().getHeight();
             
-            // (asteroidX+asteroidWidth <= spaceshipX && asteroidX >= spaceshipWidth+spaceshipX) && (asteroidY >= spaceshipY && asteroidY <= spaceshipHeight+spaceshipY)
-            // Checks any of the asteroids are in the 
-            if ((asteroidX <= spaceshipX+spaceshipWidth && asteroidX+asteroidWidth >= spaceshipX) && (asteroidY <= spaceshipY+spaceshipHeight && asteroidY+asteroidHeight >= spaceshipY)) {
+            // Checks any of the asteroids are in the spaceship's radius
+            if ((X <= spaceshipX+spaceshipWidth && X+Width >= spaceshipX) && (Y <= spaceshipY+spaceshipHeight && Y+Height >= spaceshipY)) {
                 if (asteroid.getCanHit() == true) {
                     this.setHealth(this.getHealth() - asteroid.getDamage());
                     asteroid.setCanHit(false); // stops asteroid from hitting player after first hit
@@ -48,18 +48,18 @@ public class Spaceship extends Entity {
             }
         }
 
-        for (Asteroid asteroid : asteroids) {
-            double asteroidX = asteroid.getAsteroidImageView().getLayoutX();
-            double asteroidY = asteroid.getAsteroidImageView().getLayoutY();
-            double asteroidWidth = asteroid.getAsteroidImageView().getLayoutBounds().getWidth();
-            double asteroidHeight = asteroid.getAsteroidImageView().getLayoutBounds().getHeight();
+        for (Projectile projectile : alienProjectiles) {
+            double X = projectile.getX();
+            double Y = projectile.getY();
+            double Width = projectile.getWidth();
+            double Height = projectile.getHeight();
             
-            // (asteroidX+asteroidWidth <= spaceshipX && asteroidX >= spaceshipWidth+spaceshipX) && (asteroidY >= spaceshipY && asteroidY <= spaceshipHeight+spaceshipY)
-            // Checks any of the asteroids are in the 
-            if ((asteroidX <= spaceshipX+spaceshipWidth && asteroidX+asteroidWidth >= spaceshipX) && (asteroidY <= spaceshipY+spaceshipHeight && asteroidY+asteroidHeight >= spaceshipY)) {
-                if (asteroid.getCanHit() == true) {
-                    this.setHealth(this.getHealth() - asteroid.getDamage());
-                    asteroid.setCanHit(false); // stops asteroid from hitting player after first hit
+            // Checks any of the projectiles are in the spaceship's radius
+            if ((X <= spaceshipX+spaceshipWidth && X+Width >= spaceshipX) && (Y <= spaceshipY+spaceshipHeight && Y+Height >= spaceshipY)) {
+                if (projectile.getCanHit() == true) {
+                    Alien alien = projectile.getAlien(); // gets the parent alien of the projectile so we can access how much damage it does
+                    this.setHealth(this.getHealth() - alien.getDamage());
+                    projectile.setCanHit(false); // stops projectile from hitting player after first hit
                 }
                 
             }
@@ -76,7 +76,7 @@ public class Spaceship extends Entity {
     public void shoot(double endX, double endY, int size, int speed, Pane root) {
         double startX = spaceshipImageView.getLayoutX() + (spaceshipImageView.getLayoutBounds().getWidth() / 2); // gets center X
         double startY = spaceshipImageView.getLayoutY() + (spaceshipImageView.getLayoutBounds().getHeight() / 2); // gets center Y
-        Projectile projectile = new Projectile(startX, startY, endX, endY, size, speed, Paint.valueOf("Yellow"));
+        Projectile projectile = new Projectile(startX, startY, endX, endY, size, speed, Paint.valueOf("Yellow"), this);
         projectile.move();
         root.getChildren().add(projectile);
         projectiles.add(projectile);
@@ -96,21 +96,41 @@ public class Spaceship extends Entity {
         }
     }
 
+    public List<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
     // HANDLE USER INPUTS
 
     public void moveUp() {
-        spaceshipImageView.setLayoutY(spaceshipImageView.getLayoutY() - 10);
+        double nextLocation = spaceshipImageView.getLayoutY() - speed;
+        if (nextLocation >= 0) { // check if the spaceship is going to go off the screen
+            spaceshipImageView.setLayoutY(nextLocation);
+            spaceshipImageView.setRotate(0); // set rotate to make the spaceship face the direction it is flying, same logic for all the other move methods
+        }
     }
 
-    public void moveDown() {
-        spaceshipImageView.setLayoutY(spaceshipImageView.getLayoutY() + 10);
+    public void moveDown(double sceneHeight) {
+        double nextLocation = spaceshipImageView.getLayoutY() + speed;
+        if (nextLocation <= sceneHeight - this.getHeight()) { // check if the spaceship is going to go off the screen, needs getHeight because the reference point is the top left
+            spaceshipImageView.setLayoutY(nextLocation);
+            spaceshipImageView.setRotate(180);
+        }
     }
 
-    public void moveRight() {
-        spaceshipImageView.setLayoutX(spaceshipImageView.getLayoutX() + 10);
+    public void moveRight(double sceneWidth) {
+        double nextLocation = spaceshipImageView.getLayoutX() + speed;
+        if (nextLocation <= sceneWidth - this.getWidth()) { // check if the spaceship is going to go off the screen, needs getWidth for the same reason
+            spaceshipImageView.setLayoutX(nextLocation);
+            spaceshipImageView.setRotate(90);
+        }
     }
 
     public void moveLeft() {
-        spaceshipImageView.setLayoutX(spaceshipImageView.getLayoutX() - 10);
+        double nextLocation = spaceshipImageView.getLayoutX() - speed;
+        if (nextLocation >= 0) { // check if the spaceship is going to go off the screen
+            spaceshipImageView.setLayoutX(nextLocation);
+            spaceshipImageView.setRotate(270);
+        }
     }
 }

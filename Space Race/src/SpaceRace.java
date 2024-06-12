@@ -30,7 +30,10 @@ public class SpaceRace extends Application {
     BackgroundGenerator bgGen = new BackgroundGenerator();
     Stage stage;
     Stats stats = new Stats();
+    // The reason I also used keycode instead of only event.setOnKeyPressed because it had a delay between when you first press it and when it starts to continuously move it, since it detects key inputs and doesn't detect if it is held down (e.g. if you hold down any letter on your keyboard, it will take half a second before it spams the letter)
+    // This made it hard to dodge the asteroids that were coming at you
     Map<KeyCode, Boolean> keyStates = new HashMap<>(); // From https://docs.oracle.com/javase/8/docs/api/java/util/Map.html, simply keeps track of keys that have been pressed
+    
 
     public static void main(String[] args) {
         launch(args);
@@ -51,44 +54,43 @@ public class SpaceRace extends Application {
 
         ArrayList<Node> gridElements = new ArrayList<>(); // ArrayList to store elements in the grid so a loop can be used to add it to center them and to add them to the GridPane
 
-        Label welcome = new Label("Welcome To");
-        GridPane.setConstraints(welcome, 0, 0);
-        gridElements.add(welcome);
-
         Label title = new Label("Space Race");
-        GridPane.setConstraints(title, 0, 1);
+        title.setStyle("-fx-text-fill: AQUA;"+"-fx-font-size: 35pt;");
+        GridPane.setConstraints(title, 0, 0);
         gridElements.add(title);
 
-        Button playButton = new Button("PLAY");
-        playButton.setStyle("-fx-background-color: lime");
-        GridPane.setConstraints(playButton, 0, 2);
-        gridElements.add(playButton);
-
-        Label movementInstructions = new Label("Use W, A, S, D to move");
-        movementInstructions.setStyle("-fx-font-size: 12pt");
-        GridPane.setConstraints(movementInstructions, 0, 3);
-        gridElements.add(movementInstructions);
-
-        Label shootingInstructions = new Label("Left MB to shoot");
-        shootingInstructions.setStyle("-fx-font-size: 12pt");
-        GridPane.setConstraints(shootingInstructions, 0, 4);
-        gridElements.add(shootingInstructions);
-
         Label objective1 = new Label("The objective of this game is to");
-        objective1.setStyle("-fx-font-size: 12pt");
-        GridPane.setConstraints(objective1, 0, 5);
+        GridPane.setConstraints(objective1, 0, 1);
         gridElements.add(objective1);
 
         Label objective2 = new Label("dodge asteroids, shoot aliens, and");
-        objective2.setStyle("-fx-font-size: 12pt");
-        GridPane.setConstraints(objective2, 0, 6);
+        GridPane.setConstraints(objective2, 0, 2);
         gridElements.add(objective2);
 
         Label objective3 = new Label("SURVIVE");
-        objective3.setStyle("-fx-font-size: 20pt");
-        objective3.setStyle("-fx-text-fill: red");
-        GridPane.setConstraints(objective3, 0, 7);
+        objective3.setStyle("-fx-text-fill: red;");
+        GridPane.setConstraints(objective3, 0, 3);
         gridElements.add(objective3);
+
+        Label controlsTitle = new Label("Controls");
+        controlsTitle.setStyle("-fx-font-size: 25pt;" + "-fx-text-fill: yellow;");
+        GridPane.setConstraints(controlsTitle, 0, 4);
+        gridElements.add(controlsTitle);
+
+        Label movementInstructions = new Label("- W, A, S, D to move");
+        GridPane.setConstraints(movementInstructions, 0, 5);
+        gridElements.add(movementInstructions);
+
+        Label shootingInstructions = new Label("- Left Click to shoot");
+        GridPane.setConstraints(shootingInstructions, 0, 6);
+        gridElements.add(shootingInstructions);
+        
+        Button playButton = new Button("PLAY");
+        GridPane.setConstraints(playButton, 0, 7);
+        gridElements.add(playButton);
+
+        // HANDLING BUTTON EVENT
+        playButton.setOnAction(e -> initiateGame()); // once the user clicks the play button, it changes the scene to the main game
 
         // Loop to center everything and add them to the grid layout
         for(Node element : gridElements) {
@@ -113,11 +115,6 @@ public class SpaceRace extends Application {
         // been shown due to how JavaFX is implemented
         introMenuGrid.setLayoutX((int) ((introRoot.getWidth() / 2) - (introMenuGrid.getWidth() / 2)));
         introMenuGrid.setLayoutY((int) ((introRoot.getHeight() / 2) - (introMenuGrid.getHeight() / 2)));
-
-        // HANDLING BUTTON EVENT
-        playButton.setOnAction(e -> { // once the user clicks the play button, it changes the scene to the main game
-            initiateGame();
-        });
     }
 
     // Method to handle everything that happens in the actual game play scene
@@ -174,15 +171,14 @@ public class SpaceRace extends Application {
             @Override
             public void handle(long arg0) {
                 // We use a map instead of catching the event directly because of how javafx handles keys being held, which made movement sluggish
-                // TODO consider adding a debounce to each key
                 if (keyStates.getOrDefault(KeyCode.W, false)) {
                     spaceship.moveUp();
                 }
                 if (keyStates.getOrDefault(KeyCode.S, false)) {
-                    spaceship.moveDown();
+                    spaceship.moveDown(mainGameScene.getHeight());
                 }
                 if (keyStates.getOrDefault(KeyCode.D, false)) {
-                    spaceship.moveRight();
+                    spaceship.moveRight(mainGameScene.getWidth());
                 }
                 if (keyStates.getOrDefault(KeyCode.A, false)) {
                     spaceship.moveLeft();
@@ -191,9 +187,8 @@ public class SpaceRace extends Application {
                 spaceship.updateProjectiles(mainGameScene, mainGameRoot); // essentially loops to update the position of projectiles
                 projectile.updateProjectiles(mainGameScene, mainGameRoot, alienProjectiles);
                 updateAsteroids(mainGameScene, mainGameRoot, asteroids, 5); // same logic as projectiles
-                spaceship.checkCollisions(asteroids); // loops to check if the spaceship has touched anything that deals damage to it
-
-                health.setHealth(spaceship.getHealth());
+                spaceship.checkCollisions(asteroids, alienProjectiles); // loops to check if the spaceship has touched anything that deals damage to it
+                health.setHealth(spaceship.getHealth()); // sets the max health of the spaceship (starting health)
 
                 // subtracts the elapsed time between when the timer first starts and now, if it is a time between 1-4 seconds (1000-4000ms) then reset the startTime and spawn an asteroid
                 if (System.currentTimeMillis() - asteroidSpawnTime >= 1000 + (Math.random()*2000)) {
@@ -219,16 +214,28 @@ public class SpaceRace extends Application {
                     mainGameRoot.getChildren().add(alienImageView);
                 }
 
-                if (System.currentTimeMillis() - alienShootTime >= 2000) { // every two seconds, make aliens shoot
-                    for (Alien alien : aliens) {
+                // Loop to handle alien 
+                for (int i = 0; i < aliens.size(); i++) { // regular loop instead of enhanced loop for the same reason as the updateAsteroids method
+                    Alien alien = aliens.get(i);
+                    if (System.currentTimeMillis() - alienShootTime >= 2000) { // every two seconds, make aliens shoot
                         alienShootTime = System.currentTimeMillis();
                         alien.shoot(spaceshipImageView, 5, 3, mainGameRoot, alienProjectiles);
                     }
+
+                    if (alien.getHealth() <= 0) { // Once the alien reaches 0 HP, delete it from both the scene/root and the ArrayList
+                        aliens.remove(alien);
+                        mainGameRoot.getChildren().remove(alien.getImageView());
+                        stats.setKills(stats.getKills() + 1); // Give the player a kill
+                    }
+
+                    alien.checkCollisions(spaceship.getProjectiles(), stats);
                 }
+                
 
                 // Health manager
                 if (spaceship.getHealth() <= 0) {
                     this.stop();
+                    keyStates.clear(); // Clears all the keys that were pressed, to save storage and to prevent the spaceship from moving as soon as you press the "Play Again" button if you died while moving
                     initiateGameOver();
                 }
             }
@@ -248,8 +255,7 @@ public class SpaceRace extends Application {
         ArrayList<Node> gridElements = new ArrayList<>(); // ArrayList to store elements in the grid so a loop can be used to add it to center them and to add them to the GridPane
 
         Label gameOver = new Label("GAME OVER");
-        gameOver.setStyle("-fx-font-size: 20pt");
-        gameOver.setStyle("-fx-text-fill: red");
+        gameOver.setStyle("-fx-font-size: 20pt;" + "-fx-text-fill: red;");
         GridPane.setConstraints(gameOver, 0, 0);
         gridElements.add(gameOver);
 
@@ -259,10 +265,10 @@ public class SpaceRace extends Application {
         GridPane.setConstraints(highScores, 0, 1);
         gridElements.add(highScores);
 
-
         // Write this game's scores to a file
         stats.saveStats();
 
+        // Get and display high scores
         Stats highestStats = returnHighest();
         Label kills = new Label("Kills: " + highestStats.getKills());
         Label timeSurvived = new Label("Time Survived: " + highestStats.getTimeSurvived() + " seconds");
@@ -274,6 +280,11 @@ public class SpaceRace extends Application {
         gridElements.add(timeSurvived);
         gridElements.add(damageDone);
 
+        // Retry button so the player doesn't have to close the game and reopen it to play
+        Button retry = new Button("Play Again");
+        GridPane.setConstraints(retry, 0, 5);
+        retry.setOnMouseClicked(e -> initiateGame());
+        gridElements.add(retry);
         
         // Loop to center everything and add them to the grid layout
         for(Node element : gridElements) {
@@ -282,7 +293,7 @@ public class SpaceRace extends Application {
         }
 
         Scene gameOverScene = new Scene(gameOverGrid, 400, 800);
-        gameOverScene.getStylesheets().add("gameOverStyles.css"); // add the styles.css style sheet so it can be used by the scene
+        gameOverScene.getStylesheets().add("textStyles.css"); // add the styles.css style sheet so it can be used by the scene
         stage.setScene(gameOverScene);
     }
 
@@ -295,7 +306,7 @@ public class SpaceRace extends Application {
             asteroid.moveAsteroid(speed);
 
             // Deletes the asteroid from the layout and the list once it goes off the screen on the left
-            if (asteroidImageView.getLayoutX() < (-asteroidImageView.getLayoutX()) || asteroidImageView.getLayoutY() < (-asteroidImageView.getLayoutY())) {
+            if (asteroidImageView.getLayoutX() < (-asteroidImageView.getLayoutX() - asteroidImageView.getLayoutBounds().getWidth()) || asteroidImageView.getLayoutY() < (-asteroidImageView.getLayoutY())) {
                 root.getChildren().remove(asteroidImageView);
                 asteroids.remove(asteroid);
             }

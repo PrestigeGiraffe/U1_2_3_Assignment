@@ -8,7 +8,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
@@ -34,6 +33,10 @@ public class Alien extends Entity {
         return alienImageView;
     }
 
+    public ImageView getImageView() {
+        return alienImageView;
+    }
+
     public void shoot(ImageView spaceship, int size, int speed, Pane root, List<Projectile> alienProjectiles) {
         // Set the target of the projectile to the middle of the player's spaceship
         double endX = spaceship.getLayoutX() + (spaceship.getLayoutBounds().getWidth() / 2);
@@ -41,23 +44,38 @@ public class Alien extends Entity {
         
         double startX = alienImageView.getLayoutX() + (alienImageView.getLayoutBounds().getWidth() / 2); // gets center X
         double startY = alienImageView.getLayoutY() + (alienImageView.getLayoutBounds().getHeight() / 2); // gets center Y
-        Projectile projectile = new Projectile(startX, startY, endX, endY, size, speed, Paint.valueOf("Lime"));
+        Projectile projectile = new Projectile(startX, startY, endX, endY, size, speed, Paint.valueOf("Lime"), this);
         projectile.move();
         root.getChildren().add(projectile);
         alienProjectiles.add(projectile);
         alienProjectiles.add(projectile);
     }
 
-    // Loops through all the projectiles on the screen and updates their position
-    public void updateProjectiles(Scene scene, Pane root) {
-        for (int i = 0; i < alienProjectiles.size(); i++) { // used a regular for loop instead of an enhanced for loop because it caused ConcurrentModificationExceptions when projectiles were being removed
-            Projectile projectile = alienProjectiles.get(i);
-            projectile.move();
+    // same concept as the spaceship's checkCollisions method
+    public void checkCollisions(List<Projectile> spaceshipProjectiles, Stats stats) {
+        double alienWidth = alienImageView.getLayoutBounds().getWidth();
+        double alienHeight = alienImageView.getLayoutBounds().getHeight();
+        double alienX = alienImageView.getLayoutX();
+        double alienY = alienImageView.getLayoutY();
 
-            // Deletes the projectile from the layout and the list once it goes off the screen
-            if (projectile.getX() > scene.getWidth() || projectile.getY() > scene.getHeight() || projectile.getX() < 0 || projectile.getY() < 0) {
-                root.getChildren().remove(projectile);
-                alienProjectiles.remove(projectile);
+        for (Projectile projectile : spaceshipProjectiles) {
+            double X = projectile.getX();
+            double Y = projectile.getY();
+            double Width = projectile.getWidth();
+            double Height = projectile.getHeight();
+            
+            // Checks any of the projectiles are in the spaceship's radius
+            if ((X <= alienX+alienWidth && X+Width >= alienX) && (Y <= alienY+alienHeight && Y+Height >= alienY)) {
+                if (projectile.getCanHit() == true) {
+                    Spaceship spaceship = projectile.getSpaceship(); // gets the parent spaceship of the projectile so we can access how much damage it does
+                    this.setHealth(this.getHealth() - spaceship.getDamage());
+    
+                    projectile.setCanHit(false); // stops projectile from hitting player after first hit
+
+                    // Increase the damage done stat so it can be displayed in game over screen
+                    stats.setDamageDone((int)(stats.getDamageDone() + spaceship.getDamage()));
+                }
+                
             }
         }
     }
