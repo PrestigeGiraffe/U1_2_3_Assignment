@@ -30,7 +30,7 @@ public class SpaceRace extends Application {
     BackgroundGenerator bgGen = new BackgroundGenerator();
     Stage stage;
     Stats stats = new Stats();
-    Map<KeyCode, Boolean> keyStates = new HashMap<>();
+    Map<KeyCode, Boolean> keyStates = new HashMap<>(); // From https://docs.oracle.com/javase/8/docs/api/java/util/Map.html, simply keeps track of keys that have been pressed
 
     public static void main(String[] args) {
         launch(args);
@@ -173,6 +173,8 @@ public class SpaceRace extends Application {
 
             @Override
             public void handle(long arg0) {
+                // We use a map instead of catching the event directly because of how javafx handles keys being held, which made movement sluggish
+                // TODO consider adding a debounce to each key
                 if (keyStates.getOrDefault(KeyCode.W, false)) {
                     spaceship.moveUp();
                 }
