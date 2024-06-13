@@ -114,8 +114,7 @@ public class SpaceRace extends Application {
         introMenuGrid.setLayoutY((int) ((introRoot.getHeight() / 2) - (introMenuGrid.getHeight() / 2)));
     }
 
-    // Method to handle everything that happens in the actual game play scene
-    public Scene initiateGame() {
+    public void initiateGame() {
         Pane mainGameRoot = new Pane();
         Scene mainGameScene = new Scene(mainGameRoot, 1920, 1080);
         mainGameScene.getStylesheets().add("textStyles.css"); // add styles.css so all the UI designs/colors apply
@@ -243,8 +242,6 @@ public class SpaceRace extends Application {
         };
 
         timer.start();
-
-        return mainGameScene;
     }
 
     public void initiateGameOver() {
