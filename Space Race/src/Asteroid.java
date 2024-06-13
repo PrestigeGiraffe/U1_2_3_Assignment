@@ -11,6 +11,11 @@ public class Asteroid extends Entity {
     private ImageView asteroidImageView;
     private boolean canHit = true; // field that disables the asteroid from doing damage after it has already hit the player
 
+    /**
+     * Creates an asteroid
+     * @param size size of asteroid
+     * @param scene scene that the asteroid will be in
+     */
     Asteroid(int size, Scene scene) {
         super("res\\Asteroid.png", size, size); // does what the spaceship constructor does but for asteroid.png
         asteroidImageView = new ImageView(this); // ImageView allows the image to be displayed to the user
@@ -21,20 +26,35 @@ public class Asteroid extends Entity {
         this.setDamage(25);
     }
     
+    /**
+     * Returns ImageView of asteroid
+     * @return
+     */
     public ImageView getAsteroidImageView() {
         return asteroidImageView;
     }
 
+    /**
+     * Moves asteroid towards the left side of the screen
+     * @param speed
+     */
     public void moveAsteroid(int speed) {
         asteroidImageView.setLayoutX(asteroidImageView.getLayoutX() - speed); // moves the asteroid towards the left side of the screen
     }
 
     // GETTERS AND SETTERS
-
+    /**
+     * Returns canHit value
+     * @return
+     */
     public boolean getCanHit() {
         return canHit;
     }
 
+    /**
+     * Sets canHit value
+     * @param canHit
+     */
     public void setCanHit(boolean canHit) {
         this.canHit = canHit;
     }

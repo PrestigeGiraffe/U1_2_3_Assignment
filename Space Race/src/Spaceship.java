@@ -18,6 +18,10 @@ public class Spaceship extends Entity {
     List<Projectile> projectiles = new ArrayList<>(); // List of projectiles to keep track of them
     ImageView spaceshipImageView;
 
+    /**
+     * Creates spaceship entity
+     * @param size size of the spaceship
+     */
     Spaceship(int size) {
         super("res\\Spaceship.png", size, size); // calls parent class' (Entity) constructor which then extends image to create an object of an image of spaceship.png
 
@@ -26,6 +30,11 @@ public class Spaceship extends Entity {
         this.setDamage(10);
     }
 
+    /**
+     * Checks if anything that can deal damage has collided with the spaceship
+     * @param asteroids list of asteroids that can do damage
+     * @param alienProjectiles list of alien projectiles that can do damage
+     */
     public void checkCollisions(List<Asteroid> asteroids, List<Projectile> alienProjectiles) {
         // Variables of the spaceship's dimensions and location so it can be used to check collisions
         double spaceshipWidth = spaceshipImageView.getLayoutBounds().getWidth();
@@ -69,6 +78,12 @@ public class Spaceship extends Entity {
         }
     }
 
+    /**
+     * Returns the ImageView of the spaceship so it can be displayed
+     * @param x x coordinate of spaceship
+     * @param y y coordinate of spaceship
+     * @return
+     */
     public ImageView spawnSpaceShip(int x, int y) {
         spaceshipImageView = new ImageView(this); // ImageView allows the image to be displayed to the user
         spaceshipImageView.setLayoutX(x);
@@ -76,6 +91,14 @@ public class Spaceship extends Entity {
         return spaceshipImageView; // returns the ImageView so it can be displayed on the screen and so we can manipulate the position of it
     }
 
+    /**
+     * shoots projectile from the center of the spaceship
+     * @param endX end X point of the projectile
+     * @param endY end Y point of the projectile
+     * @param size size of the projectile
+     * @param speed speed of the projectile
+     * @param root root that the projectile will be added to
+     */
     public void shoot(double endX, double endY, int size, int speed, Pane root) {
         double startX = spaceshipImageView.getLayoutX() + (spaceshipImageView.getLayoutBounds().getWidth() / 2); // gets center X
         double startY = spaceshipImageView.getLayoutY() + (spaceshipImageView.getLayoutBounds().getHeight() / 2); // gets center Y
@@ -86,7 +109,11 @@ public class Spaceship extends Entity {
         projectiles.add(projectile);
     }
 
-    // Loops through all the projectiles on the screen and updates their position
+    /**
+     * Loops through all the projectiles on the screen and updates their position
+     * @param scene scene that the projectile is in
+     * @param root root that the projectile is in
+     */
     public void updateProjectiles(Scene scene, Pane root) {
         for (int i = 0; i < projectiles.size(); i++) { // used a regular for loop instead of an enhanced for loop because it caused ConcurrentModificationExceptions when projectiles were being removed
             Projectile projectile = projectiles.get(i);
@@ -100,11 +127,19 @@ public class Spaceship extends Entity {
         }
     }
 
+    /**
+     * Returns the list of projectiles
+     * @return
+     */
     public List<Projectile> getProjectiles() { // returns the list of projectiles so it can be used to check if any of the projectiles hit an alien
         return projectiles;
     }
 
     // HANDLE USER INPUTS
+    
+    /**
+     * Move the spaceship up
+     */
     public void moveUp() {
         double nextLocation = spaceshipImageView.getLayoutY() - speed;
         if (nextLocation >= 0) { // check if the spaceship is going to go off the screen
@@ -113,6 +148,10 @@ public class Spaceship extends Entity {
         }
     }
 
+    /**
+     * Move the spaceship down
+     * @param sceneHeight height of the scene to get boundaries
+     */
     public void moveDown(double sceneHeight) {
         double nextLocation = spaceshipImageView.getLayoutY() + speed;
         if (nextLocation <= sceneHeight - this.getHeight()) { // check if the spaceship is going to go off the screen, needs getHeight because the reference point is the top left
@@ -121,6 +160,10 @@ public class Spaceship extends Entity {
         }
     }
 
+    /**
+     * Move the spaceship right
+     * @param sceneWidth width of the scene to get boundaries
+     */
     public void moveRight(double sceneWidth) {
         double nextLocation = spaceshipImageView.getLayoutX() + speed;
         if (nextLocation <= sceneWidth - this.getWidth()) { // check if the spaceship is going to go off the screen, needs getWidth for the same reason
@@ -129,6 +172,9 @@ public class Spaceship extends Entity {
         }
     }
 
+    /**
+     * Move the spaceship down
+     */
     public void moveLeft() {
         double nextLocation = spaceshipImageView.getLayoutX() - speed;
         if (nextLocation >= 0) { // check if the spaceship is going to go off the screen

@@ -17,11 +17,25 @@ public class Projectile extends Rectangle {
     private Alien alien = null; // Property used to find fields during hit detection
     private Spaceship spaceship = null;
 
+    /**
+     * Creates projectile with default values so methods inside class can be used
+     */
     Projectile() {}
 
     // Creates a new projectile and stores the values passed into the constructor as
 
-    // Constructor for spaceship
+    /**
+     * Creates a spaceship projectile with set fields
+     * @param startX start point X
+     * @param startY start point Y
+     * @param endX end point X
+     * @param endY end point Y
+     * @param size size of the projectile
+     * @param speed speed of the projectile
+     * @param color color of the projectile
+     * @param spaceship spaceship that spawned the projectile
+     */
+    // 
     Projectile(double startX, double startY, double endX, double endY, int size, int speed, Paint color, Spaceship spaceship) {
         super(startX, startY, size, size);
         
@@ -36,7 +50,17 @@ public class Projectile extends Rectangle {
         this.spaceship = spaceship;
     }
 
-    // Constructor for alien
+    /**
+     * Constructor for alien
+     * @param startX start point X
+     * @param startY start point Y
+     * @param endX end point X
+     * @param endY end point Y
+     * @param size size of projectile
+     * @param speed speed of projectile
+     * @param color color of projectile
+     * @param alien alien that spawned the projectile
+     */
     Projectile(double startX, double startY, double endX, double endY, int size, int speed, Paint color, Alien alien) {
         super(startX, startY, size, size);
         
@@ -51,12 +75,20 @@ public class Projectile extends Rectangle {
         this.alien = alien;
     }
 
+    /**
+     * Moves projectile based on speed calculations in method above
+     */
     public void move() {
         this.setX(this.getX() + speedX);
         this.setY(this.getY() + speedY);
     }
 
-    // Loops through all the alien projectiles on the screen and updates their position
+    /**
+     * Loops through all the alien projectiles on the screen and updates their position
+     * @param scene scene that the projectile will be in
+     * @param root root that the projectile will be in
+     * @param alienProjectiles List that the projectile will be stored in
+     */
     public void updateProjectiles(Scene scene, Pane root, List<Projectile> alienProjectiles) {
         for (int i = 0; i < alienProjectiles.size(); i++) { // used a regular for loop instead of an enhanced for loop because it caused ConcurrentModificationExceptions when projectiles were being removed
             Projectile projectile = alienProjectiles.get(i);
@@ -71,18 +103,34 @@ public class Projectile extends Rectangle {
     }
 
     // GETTER AND SETTER
+    /**
+     * Returns canHit
+     * @return
+     */
     public boolean getCanHit() {
         return canHit;
     }
 
+    /**
+     * Sets canHit
+     * @param canHit
+     */
     public void setCanHit(boolean canHit) {
         this.canHit = canHit;
     }
 
+    /**
+     * Returns alien object so entity fields can be accessed
+     * @return
+     */
     public Alien getAlien() {
         return alien;
     }
 
+    /**
+     * Returns spaceship so entity fields can be accessed
+     * @return
+     */
     public Spaceship getSpaceship() {
         return spaceship;
     }

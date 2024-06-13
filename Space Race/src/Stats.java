@@ -9,15 +9,29 @@ import java.io.IOException;
 public class Stats {
     private int kills, timeSurvived, damageDone;
 
+    /**
+     * Empty constructor to use methods in this class
+     */
     public Stats() {}
 
+    /**
+     * Constructor that allows the user to set the stats that this class will take
+     * @param kills
+     * @param timeSurvived
+     * @param damageDone
+     */
     public Stats(int kills, int timeSurvived, int damageDone) {
         this.kills = kills;
         this.timeSurvived = timeSurvived;
         this.damageDone = damageDone;
     }
 
-    // Secondary constructor that casts the stats from strings into ints so the split strings can be passed through
+    /**
+     * Secondary constructor that casts the stats from strings into ints so the split strings can be passed through
+     * @param kills
+     * @param timeSurvived
+     * @param damageDone
+     */
     public Stats(String kills, String timeSurvived, String damageDone) {
         try {
             this.kills = Integer.parseInt(kills);
@@ -30,7 +44,9 @@ public class Stats {
         
     }
 
-    // Method that writes the current game's scores down into a file
+    /**
+     * Method that writes the current game's scores down into a file
+     */
     public void saveStats() {
         try {
             FileWriter file = new FileWriter("stats.txt", true); // Set to true to append text to file instead of overriding
@@ -45,23 +61,50 @@ public class Stats {
         }
     }
 
+    /**
+     * Returns kills
+     * @return
+     */
     public int getKills() {
         return kills;
     }
+
+    /**
+     * Sets kills
+     * @param score
+     */
     public void setKills(int score) {
         this.kills = score;
     }
 
+    /**
+     * Returns time survived
+     * @return
+     */
     public int getTimeSurvived() {
         return timeSurvived;
     }
+
+    /**
+     * Sets time survived
+     * @param timeSurvived
+     */
     public void setTimeSurvived(int timeSurvived) {
         this.timeSurvived = timeSurvived;
     }
 
+    /**
+     * Returns damage done
+     * @return
+     */
     public int getDamageDone() {
         return damageDone;
     }
+
+    /**
+     * Sets damage done
+     * @param damageDone
+     */
     public void setDamageDone(int damageDone) {
         this.damageDone = damageDone;
     }

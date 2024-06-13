@@ -17,7 +17,10 @@ public class Alien extends Entity {
     ImageView alienImageView;
     private int speed = 1, startY, endY;
 
-    // Same logic as the spaceship's constructor
+    /**
+     * Same logic as the spaceship's constructor
+     * @param size size of the alien
+     */
     public Alien(int size) {
         super("res\\Alien.png", size, size); // Create image of alien
 
@@ -26,7 +29,12 @@ public class Alien extends Entity {
         this.setHealth(50);
     }
 
-    // Same logic behind spawnSpaceship but just for Alien
+    /**
+     * // Same logic as the spaceship's constructor
+     * @param x
+     * @param y
+     * @return returns the ImageView of the alien
+     */
     public ImageView spawnAlien(int x, int y) {
         alienImageView = new ImageView(this);
         alienImageView.setLayoutX(x);
@@ -36,10 +44,22 @@ public class Alien extends Entity {
         return alienImageView;
     }
 
+    /**
+     * Returns the alienImageView to where this method was called
+     * @return
+     */
     public ImageView getImageView() {
         return alienImageView;
     }
 
+    /**
+     * Shoots a projectile from the center of the alien
+     * @param spaceship
+     * @param size
+     * @param speed
+     * @param root
+     * @param alienProjectiles
+     */
     public void shoot(ImageView spaceship, int size, int speed, Pane root, List<Projectile> alienProjectiles) {
         // Set the target of the projectile to the middle of the player's spaceship
         double endX = spaceship.getLayoutX() + (spaceship.getLayoutBounds().getWidth() / 2);
@@ -54,7 +74,11 @@ public class Alien extends Entity {
         alienProjectiles.add(projectile);
     }
 
-    // same concept as the spaceship's checkCollisions method
+    /**
+     * same concept as the spaceship's checkCollisions method
+     * @param spaceshipProjectiles
+     * @param stats
+     */
     public void checkCollisions(List<Projectile> spaceshipProjectiles, Stats stats) {
         double alienWidth = alienImageView.getLayoutBounds().getWidth();
         double alienHeight = alienImageView.getLayoutBounds().getHeight();
@@ -83,6 +107,9 @@ public class Alien extends Entity {
         }
     }
 
+    /**
+     * Moves the alien up and down
+     */
     public void move() {
         double currentY = alienImageView.getLayoutY();
 
