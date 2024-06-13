@@ -9,15 +9,9 @@ public class Entity extends Image {
     // private variables to prevent inadvertent direct changes to variables
     private double health, damage;
 
-    Entity() {
-        super(null, 50, 50, true, true, true);
+    Entity(String image, double x, double y) { // Second constructor 
+        super(image, x, y, true, true, true);  // passes these values to the Image class constructor
     }
-
-    Entity(String image, double x, double y) { // passes these values to the Image class constructor
-        super(image, x, y, true, true, true);
-    }
-
-    
 
     // GETTERS AND SETTERS TO GET AND SET VALUES OF PRIVATE VARIABLES
     public double getHealth() {

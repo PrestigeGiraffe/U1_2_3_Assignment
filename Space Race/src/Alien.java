@@ -1,6 +1,6 @@
 /*
  * Purpose: Class that creates an alien entity. Also contains methods to move the alien and check for collisions
- * Author: Johnson
+ * Author: Johnson Yep
  */
 
 // Credit for image: https://www.freepik.com/premium-vector/alien-ufo-cartoon-illustration_49417092.htm
@@ -44,10 +44,10 @@ public class Alien extends Entity {
         
         double startX = alienImageView.getLayoutX() + (alienImageView.getLayoutBounds().getWidth() / 2); // gets center X
         double startY = alienImageView.getLayoutY() + (alienImageView.getLayoutBounds().getHeight() / 2); // gets center Y
+
+        // Create new projectile and add it to the root so it can be displayed and the List so it can be accessed later to check for hits and to delete it
         Projectile projectile = new Projectile(startX, startY, endX, endY, size, speed, Paint.valueOf("Lime"), this);
-        projectile.move();
         root.getChildren().add(projectile);
-        alienProjectiles.add(projectile);
         alienProjectiles.add(projectile);
     }
 

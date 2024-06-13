@@ -1,3 +1,8 @@
+ /*
+  * Purpose: Class that contains a method to draw stars as a background design element in a scene
+  * Author: Johnson Yep
+  */
+
 import javafx.scene.Group;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;

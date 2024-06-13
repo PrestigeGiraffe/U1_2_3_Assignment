@@ -1,5 +1,5 @@
 /*
- * Purpose: Class that stores values of the player's stats: kills, time survived in the game, and damage done to enemies in the game. Contains methods to print and read these values from a file
+ * Purpose: Class that stores values of the player's stats: kills, time survived in the game, and damage done to enemies in the game. Contains a method to write these stats to a file.
  * Author: Johnson Yep
  */
 
@@ -33,7 +33,7 @@ public class Stats {
     // Method that writes the current game's scores down into a file
     public void saveStats() {
         try {
-            FileWriter file = new FileWriter("HighScores.txt", true); // True to append text to file instead of overriding
+            FileWriter file = new FileWriter("HighScores.txt", true); // Set to true to append text to file instead of overriding
             
             file.write(String.format("%d %d %d", kills, timeSurvived, damageDone));
             file.write(System.lineSeparator());

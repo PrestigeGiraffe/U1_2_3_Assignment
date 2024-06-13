@@ -1,5 +1,5 @@
 /*
- * Purpose: Creates an image of a spaceship, handles movement using WASD, and creates instance of projectile when shooting
+ * Purpose: Creates an image of a spaceship, handles movement using W,A,S,D and creates instance of projectile when shooting
  * Author: Johnson Yep
  */
 
@@ -14,7 +14,7 @@ import javafx.scene.paint.Paint;
 // Credit for image: https://www.vecteezy.com/vector-art/6101910-spaceship-cartoon-icon
 
 public class Spaceship extends Entity {
-    private int speed = 2;
+    private int speed = 2; // speed of projectiles
     List<Projectile> projectiles = new ArrayList<>(); // List of projectiles to keep track of them
     ImageView spaceshipImageView;
 
@@ -27,12 +27,14 @@ public class Spaceship extends Entity {
     }
 
     public void checkCollisions(List<Asteroid> asteroids, List<Projectile> alienProjectiles) {
+        // Variables of the spaceship's dimensions and location so it can be used to check collisions
         double spaceshipWidth = spaceshipImageView.getLayoutBounds().getWidth();
         double spaceshipHeight = spaceshipImageView.getLayoutBounds().getHeight();
         double spaceshipX = spaceshipImageView.getLayoutX();
         double spaceshipY = spaceshipImageView.getLayoutY();
 
         for (Asteroid asteroid : asteroids) {
+            // Variables of asteroid dimensions and locations
             double X = asteroid.getAsteroidImageView().getLayoutX();
             double Y = asteroid.getAsteroidImageView().getLayoutY();
             double Width = asteroid.getAsteroidImageView().getLayoutBounds().getWidth();
@@ -41,7 +43,7 @@ public class Spaceship extends Entity {
             // Checks any of the asteroids are in the spaceship's radius
             if ((X <= spaceshipX+spaceshipWidth && X+Width >= spaceshipX) && (Y <= spaceshipY+spaceshipHeight && Y+Height >= spaceshipY)) {
                 if (asteroid.getCanHit() == true) {
-                    this.setHealth(this.getHealth() - asteroid.getDamage());
+                    this.setHealth(this.getHealth() - asteroid.getDamage()); // damages player
                     asteroid.setCanHit(false); // stops asteroid from hitting player after first hit
                 }
                 
@@ -49,6 +51,7 @@ public class Spaceship extends Entity {
         }
 
         for (Projectile projectile : alienProjectiles) {
+            // Variables of projectile dimensions and locations
             double X = projectile.getX();
             double Y = projectile.getY();
             double Width = projectile.getWidth();
@@ -58,7 +61,7 @@ public class Spaceship extends Entity {
             if ((X <= spaceshipX+spaceshipWidth && X+Width >= spaceshipX) && (Y <= spaceshipY+spaceshipHeight && Y+Height >= spaceshipY)) {
                 if (projectile.getCanHit() == true) {
                     Alien alien = projectile.getAlien(); // gets the parent alien of the projectile so we can access how much damage it does
-                    this.setHealth(this.getHealth() - alien.getDamage());
+                    this.setHealth(this.getHealth() - alien.getDamage()); // damages player
                     projectile.setCanHit(false); // stops projectile from hitting player after first hit
                 }
                 
@@ -76,8 +79,9 @@ public class Spaceship extends Entity {
     public void shoot(double endX, double endY, int size, int speed, Pane root) {
         double startX = spaceshipImageView.getLayoutX() + (spaceshipImageView.getLayoutBounds().getWidth() / 2); // gets center X
         double startY = spaceshipImageView.getLayoutY() + (spaceshipImageView.getLayoutBounds().getHeight() / 2); // gets center Y
+
+        // Creates a projectile from the center of the spaceship and adds it to the root so it can be displayed and list so the projectiles can be handled later
         Projectile projectile = new Projectile(startX, startY, endX, endY, size, speed, Paint.valueOf("Yellow"), this);
-        projectile.move();
         root.getChildren().add(projectile);
         projectiles.add(projectile);
     }
@@ -96,12 +100,11 @@ public class Spaceship extends Entity {
         }
     }
 
-    public List<Projectile> getProjectiles() {
+    public List<Projectile> getProjectiles() { // returns the list of projectiles so it can be used to check if any of the projectiles hit an alien
         return projectiles;
     }
 
     // HANDLE USER INPUTS
-
     public void moveUp() {
         double nextLocation = spaceshipImageView.getLayoutY() - speed;
         if (nextLocation >= 0) { // check if the spaceship is going to go off the screen

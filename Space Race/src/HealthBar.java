@@ -1,5 +1,5 @@
 /*
- * Purpose: Creates a health bar when the constructor is called, and contains method to manipulate the health bar
+ * Purpose: Creates a health bar when the constructor is called, and contains method to manipulate the size and text of the health bar
  * Author: Johnson Yep
  */
 
@@ -12,7 +12,7 @@ public class HealthBar extends Rectangle {
     private Label healthText;
     private int width, maxHealth;
 
-    HealthBar(int x, int y, int width, int height) {
+    HealthBar(int x, int y, int width, int height) { // passes these values to rectangle
         super(x, y, width, height);
         
         this.setFill(Paint.valueOf("White"));
@@ -32,12 +32,12 @@ public class HealthBar extends Rectangle {
     }
 
     public Label getHealthText(double maxHealth) {
-        this.maxHealth = (int)maxHealth;
+        this.maxHealth = (int)maxHealth; // sets the maxHealth of the health bar so the text can display something like: 50/100
         return healthText;
     }
     
     public void setHealth(double health) {
         insideHealthBar.setWidth((health/maxHealth)*width); // scales the bar to the player's health out of the starting health (maxHealth)
-        healthText.setText("Health: " + (int)health + "/" + maxHealth);
+        healthText.setText("Health: " + (int)health + "/" + maxHealth); // displays player's HP in text
     }
 }
