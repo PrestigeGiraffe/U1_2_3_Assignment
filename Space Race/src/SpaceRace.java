@@ -36,6 +36,9 @@ public class SpaceRace extends Application {
         launch(args);
     }
 
+    /**
+     * JavaFX entry point
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage; // sets the stage variable to the stage that is made in the start method so other methods can access the stage
@@ -114,6 +117,9 @@ public class SpaceRace extends Application {
         introMenuGrid.setLayoutY((int) ((introRoot.getHeight() / 2) - (introMenuGrid.getHeight() / 2)));
     }
 
+    /**
+     * Method to handle everything that happens in the actual game play scene
+     */
     public void initiateGame() {
         Pane mainGameRoot = new Pane();
         Scene mainGameScene = new Scene(mainGameRoot, 1920, 1080);
@@ -244,6 +250,9 @@ public class SpaceRace extends Application {
         timer.start();
     }
 
+    /**
+     * Initiates and handles game over components
+     */
     public void initiateGameOver() {
         // Grid layout for text and buttons
         GridPane gameOverGrid = new GridPane();
@@ -293,7 +302,13 @@ public class SpaceRace extends Application {
         stage.setScene(gameOverScene);
     }
 
-    // Basically the updateProjectiles method but for asteroids
+    /**
+     * Basically the updateProjectiles method but for asteroids
+     * @param scene
+     * @param root
+     * @param asteroids
+     * @param speed
+     */
     public void updateAsteroids(Scene scene, Pane root, List<Asteroid> asteroids, int speed) {
         for (int i = 0; i < asteroids.size(); i++) { // used a regular for loop instead of an enhanced for loop because it caused ConcurrentModificationExceptions when Asteroids were being removed
             Asteroid asteroid = asteroids.get(i);
