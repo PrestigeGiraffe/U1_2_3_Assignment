@@ -15,6 +15,7 @@ import javafx.scene.paint.Paint;
 public class Alien extends Entity {
     List<Projectile> alienProjectiles = new ArrayList<>(); // List of projectiles to keep track of them
     ImageView alienImageView;
+    private int speed = 1, startY, endY;
 
     // Same logic as the spaceship's constructor
     public Alien(int size) {
@@ -30,6 +31,8 @@ public class Alien extends Entity {
         alienImageView = new ImageView(this);
         alienImageView.setLayoutX(x);
         alienImageView.setLayoutY(y);
+        startY = y;
+        endY = startY + 300;
         return alienImageView;
     }
 
@@ -78,5 +81,15 @@ public class Alien extends Entity {
                 
             }
         }
+    }
+
+    public void move() {
+        double currentY = alienImageView.getLayoutY();
+
+        if (currentY == startY || currentY == endY) { // check if the alien is going to go off the screen
+            this.speed *= -1; // negates speed so it goes backwards whenever it hits one of the bounds
+        }
+        double nextLocation = alienImageView.getLayoutY() - speed;
+        alienImageView.setLayoutY(nextLocation);
     }
 }

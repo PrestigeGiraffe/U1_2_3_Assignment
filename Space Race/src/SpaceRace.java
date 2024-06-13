@@ -227,6 +227,7 @@ public class SpaceRace extends Application {
                         stats.setKills(stats.getKills() + 1); // Give the player a kill
                     }
 
+                    alien.move();
                     alien.checkCollisions(spaceship.getProjectiles(), stats); // checks if alien is touching the spaceship
                 }
                 
