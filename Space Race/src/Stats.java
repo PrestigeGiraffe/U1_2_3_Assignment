@@ -33,7 +33,7 @@ public class Stats {
     // Method that writes the current game's scores down into a file
     public void saveStats() {
         try {
-            FileWriter file = new FileWriter("HighScores.txt", true); // Set to true to append text to file instead of overriding
+            FileWriter file = new FileWriter("stats.txt", true); // Set to true to append text to file instead of overriding
             
             file.write(String.format("%d %d %d", kills, timeSurvived, damageDone));
             file.write(System.lineSeparator());

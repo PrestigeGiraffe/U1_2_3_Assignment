@@ -315,7 +315,7 @@ public class SpaceRace extends Application {
     // Method that returns the highest stats of each section in the HighScores.txt file
     public Stats returnHighest() {
         try {
-            File file = new File("HighScores.txt");
+            File file = new File("stats.txt");
             Scanner read = new Scanner(file);
 
             ArrayList<Stats> statsList = new ArrayList<>();
