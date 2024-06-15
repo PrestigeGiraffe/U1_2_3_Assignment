@@ -44,3 +44,6 @@ javafx.properties
 
 # Diectories
 bin/
+
+# Project Specific Files
+stats.txt
