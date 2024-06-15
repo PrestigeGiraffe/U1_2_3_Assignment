@@ -1,8 +1,21 @@
+ /*
+  * Purpose: Class that contains a method to draw stars as a background design element in a scene
+  * Author: Johnson Yep
+  */
+
 import javafx.scene.Group;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 public class BackgroundGenerator {
+    /**
+     * Creates stars for the outer space background
+     * @param size
+     * @param amount
+     * @param width
+     * @param height
+     * @return
+     */
     public Group drawStars(int size, int amount, int width, int height) {
         Group root = new Group();
 
