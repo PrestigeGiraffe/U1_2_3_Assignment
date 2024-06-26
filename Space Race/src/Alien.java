@@ -5,6 +5,7 @@
 
 // Credit for image: https://www.freepik.com/premium-vector/alien-ufo-cartoon-illustration_49417092.htm
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Alien extends Entity {
      * @param size size of the alien
      */
     public Alien(int size) {
-        super("res\\Alien.png", size, size); // Create image of alien
+        super(Paths.get("res", "Alien.png").toString(), size, size); // Create image of alien
 
         // Setting entity fields
         this.setDamage(10);

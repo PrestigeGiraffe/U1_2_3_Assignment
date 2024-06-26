@@ -2,6 +2,8 @@
  * Purpose: Class that manages instances of asteroids and contains method to move asteroid towards the left side of the screen
  * Author: Johnson Yep
  */
+import java.nio.file.Paths;
+
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 
@@ -17,7 +19,7 @@ public class Asteroid extends Entity {
      * @param scene scene that the asteroid will be in
      */
     Asteroid(int size, Scene scene) {
-        super("res\\Asteroid.png", size, size); // does what the spaceship constructor does but for asteroid.png
+        super(Paths.get("res", "Asteroid.png").toString(), size, size); // does what the spaceship constructor does but for asteroid.png
         asteroidImageView = new ImageView(this); // ImageView allows the image to be displayed to the user
         asteroidImageView.setLayoutX(scene.getWidth());
         asteroidImageView.setLayoutY((Math.random()*scene.getHeight()) - this.getHeight()); // spawns the asteroid at a random height on the screen

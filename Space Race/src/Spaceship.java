@@ -3,6 +3,7 @@
  * Author: Johnson Yep
  */
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Spaceship extends Entity {
      * @param size size of the spaceship
      */
     Spaceship(int size) {
-        super("res\\Spaceship.png", size, size); // calls parent class' (Entity) constructor which then extends image to create an object of an image of spaceship.png
+        super(Paths.get("res", "Spaceship.png").toString(), size, size); // calls parent class' (Entity) constructor which then extends image to create an object of an image of spaceship.png
 
         // Setting entity fields
         this.setHealth(100);

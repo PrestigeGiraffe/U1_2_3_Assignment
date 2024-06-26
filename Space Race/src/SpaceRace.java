@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Scanner;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -115,6 +116,14 @@ public class SpaceRace extends Application {
         // The position of the introMenuGrid can only be calculated after the stage has been shown due to how JavaFX is implemented
         introMenuGrid.setLayoutX((int) ((introRoot.getWidth() / 2) - (introMenuGrid.getWidth() / 2)));
         introMenuGrid.setLayoutY((int) ((introRoot.getHeight() / 2) - (introMenuGrid.getHeight() / 2)));
+
+        ChangeListener<Number> onStageResized = (observableValue, oldValue, newValue) -> {
+            // Handle redrawing the scene to fit in the new dimensions here
+            introRoot.getChildren().add(bgGen.drawStars(1, 100, (int) introScene.getWidth(), (int) introScene.getHeight()));
+        };
+
+        stage.widthProperty().addListener(onStageResized);
+        stage.heightProperty().addListener(onStageResized);
     }
 
     /**
